@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const adminAuth = (req, res, next) => {
+const userAuth = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -11,13 +11,14 @@ const adminAuth = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    if (payload?.role !== "admin") {
-      return res.status(401).json({ message: "Unauthorized" });
+    if (!payload?.userId) {
+      return res.status(401).json({ message: "Invalid token" });
     }
+    req.user = payload;
     next();
   } catch {
     res.status(401).json({ message: "Invalid token" });
   }
 };
 
-export default adminAuth;
+export default userAuth;
