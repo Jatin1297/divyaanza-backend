@@ -2,11 +2,13 @@ import jwt from "jsonwebtoken";
 
 export const loginAdmin = async (req, res) => {
 
+  console.log("LOGIN ROUTE HIT");
+
   console.log("ENV EMAIL:", process.env.ADMIN_EMAIL);
+
   console.log("ENV PASSWORD:", process.env.ADMIN_PASSWORD);
 
-  console.log("FRONT EMAIL:", req.body.email);
-  console.log("FRONT PASSWORD:", req.body.password);
+  console.log("BODY:", req.body);
 
   const { email, password } = req.body;
 
